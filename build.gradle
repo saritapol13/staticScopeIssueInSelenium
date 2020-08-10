@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+}
+
+group 'staticScopeIssueInSelenium'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile "org.junit.jupiter:junit-jupiter-api:5.5.0-M1"
+    testCompile "org.junit.platform:junit-platform-runner:1.5.0-M1"
+    testCompile "org.junit.platform:junit-platform-launcher:1.5.0-M1"
+    testCompile "org.junit.jupiter:junit-jupiter-engine:5.5.0-M1"
+    testCompile "org.junit.jupiter:junit-jupiter-params:5.5.0-M1"
+    //compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.0.0-alpha-6'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+}
+
+try {
+    test {
+        useJUnitPlatform()
+        maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+        forkEvery = 1
+
+        testLogging {
+            events 'PASSED', 'FAILED', 'SKIPPED'
+            showStandardStreams = true
+        }
+
+        afterSuite { desc, result ->
+            if (!desc.parent) {
+                println "\nTest result: ${result.resultType}"
+                println "Test summary: ${result.testCount} tests, " +
+                        "${result.successfulTestCount} passed, " +
+                        "${result.failedTestCount} failed, " +
+                        "${result.skippedTestCount} skipped"
+            }
+        }
+
+        afterEvaluate {
+            def junitPlatformTestTask = tasks.getByName('test')
+
+            junitPlatformTestTask.systemProperty 'junit.jupiter.execution.parallel.enabled', 'true'
+            junitPlatformTestTask.systemProperty 'junit.jupiter.execution.parallel.config.strategy', 'fixed'
+            junitPlatformTestTask.systemProperty 'junit.jupiter.execution.parallel.config.fixed.parallelism', '3'
+        }
+    }
+} catch (Exception e) {
+    logger.info(String.format("ERROR: Execution failed for task test %s", e.toString()));
+}

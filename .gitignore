@@ -1,0 +1,7 @@
+*.class
+target
+out
+.gradle/
+build/
+.idea/*.xml
+.idea/atlassian-ide-plugin.xml

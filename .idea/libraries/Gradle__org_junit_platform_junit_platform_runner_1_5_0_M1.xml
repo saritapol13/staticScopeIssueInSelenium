@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.junit.platform:junit-platform-runner:1.5.0-M1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-runner/1.5.0-M1/a28068023c8c8f38dcad4febc7fe3f6e144ed2f7/junit-platform-runner-1.5.0-M1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-runner/1.5.0-M1/6d8016e598e264fe9b86a5d1c4e36025cf1d3384/junit-platform-runner-1.5.0-M1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
